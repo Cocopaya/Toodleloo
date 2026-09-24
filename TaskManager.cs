@@ -35,33 +35,36 @@ namespace Toodleloo
                 throw new ArgumentException("Project does not exist.");
             Tasks.Add(task);
         }
-
-        public void ShowTasks()
+        public void SortTasks()
         {
             Console.WriteLine("\nSort by:");
             Console.WriteLine("1. Due Date");
             Console.WriteLine("2. Project");
             string choice = Console.ReadLine() ?? "";
-            List<Task> sortedTasks = Tasks;
             switch (choice)
             {
                 case "1":
-                    sortedTasks.Sort((x, y) => x.DueDate.CompareTo(y.DueDate));
+                    Tasks.Sort((x, y) => x.DueDate.CompareTo(y.DueDate));
                     break;
                 case "2":
-                    sortedTasks.Sort((x, y) => string.Compare(x.Project.Name, y.Project.Name, StringComparison.OrdinalIgnoreCase));
+                    Tasks.Sort((x, y) => string.Compare(x.Project.Name, y.Project.Name, StringComparison.OrdinalIgnoreCase));
                     break;
                 default:
                     Console.WriteLine("Invalid choice. Showing unsorted tasks.");
                     break;
             }
+        }
+
+        public void ShowTasks()
+        {
+            
             Console.WriteLine("\nTask List");
             Console.WriteLine("-------------------------------------------------------------------------");
             Console.WriteLine("Title".PadRight(15) + "Due Date".PadRight(15) + "Status".PadRight(15) + "Project");
             Console.WriteLine("-------------------------------------------------------------------------");
 
 
-            foreach (var task in sortedTasks)
+            foreach (var task in Tasks)
             {
                 Console.WriteLine($"{task.Title}".PadRight(15) + $"{task.DueDate:yyyy-MM-dd}".PadRight(15) + $"{task.Status}".PadRight(15) + $"{task.Project.Name}".PadRight(15));
             }
